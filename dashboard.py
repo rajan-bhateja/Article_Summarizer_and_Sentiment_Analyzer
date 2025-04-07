@@ -2,6 +2,7 @@ import streamlit as st
 from scraper import extract_article_text
 from sentiment_analysis import find_sentiment_intensity
 
+st.set_page_config(layout='wide', page_title='News Summarizer and Sentiment Analyzer')
 st.title('News Summarizer and Sentiment Analyzer')
 st.header('Get summarized news articles with their sentiments!')
 
