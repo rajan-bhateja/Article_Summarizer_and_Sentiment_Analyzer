@@ -18,19 +18,30 @@ col1, col2, col3 = st.columns(3)
 with col1:
     with st.form(key='form'):
         url = st.text_input('Enter URL:')
+        st.write("OR")
+        entered_article = st.text_area("Paste your article here:")
         submit = st.form_submit_button('Submit')
 
-        if submit and url:
-            full_text = extract_article_text(url)
+        if submit:
+            # if both url and the article are submitted
+            if url and entered_article:
+                st.warning('Please enter only one: either a URL or the article content — not both.')
 
-            if full_text:
-                st.success('Article extracted successfully!')
+            # if only url is submitted
+            elif url:
+                full_text = extract_article_text(url)
+                if full_text:
+                    st.success('Article extracted successfully!')
+                else:
+                    st.error('Failed to extract article. Try a different URL.')
 
+            # if only article is pasted
+            elif entered_article:
+                full_text = entered_article
+                st.success("Article received successfully!")
             else:
-                st.error('Failed to extract article. Try a different URL.')
+                st.warning('Please enter either a URL or paste article content.')
 
-        elif submit and not url:
-            st.warning('URL cannot be empty!')
 
 with col2:
     st.subheader('Summary')
